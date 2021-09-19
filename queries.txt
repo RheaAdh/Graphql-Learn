@@ -1,0 +1,19 @@
+query{
+  getPosts {
+    username
+  }
+}
+
+mutation{
+  register(registerInput: {
+    username:"rhea"
+    confirmPassword:"rheaaa"
+    password:"rheaaa"
+    email:"rhea@gmail.com"
+  }) {
+    username
+    token
+    id
+    createdAt
+  }
+}
