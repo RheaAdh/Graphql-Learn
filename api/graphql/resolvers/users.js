@@ -8,8 +8,9 @@ const {
     validateLoginInput,
 } = require("../../util/validators");
 
-const generateToken = (user) => {
-    jwt.sign(
+function generateToken(user) {
+    console.log(process.env.JWT_SECRET);
+    return jwt.sign(
         {
             id: user.id,
             email: user.email,
@@ -18,7 +19,7 @@ const generateToken = (user) => {
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
     );
-};
+}
 
 module.exports = {
     Query: {},
@@ -55,7 +56,8 @@ module.exports = {
             });
             const res = await newUser.save();
             console.log(res);
-            const token = generateToken(res);
+            const token = await generateToken(res);
+
             return {
                 ...res._doc,
                 id: res._id,
@@ -87,6 +89,8 @@ module.exports = {
                 });
             }
             const token = generateToken(user);
+            console.log(token);
+            console.log("logged in!");
             return {
                 ...user._doc,
                 id: user._id,
