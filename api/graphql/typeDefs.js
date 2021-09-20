@@ -24,6 +24,7 @@ module.exports = gql`
         getPost(postId: ID!): Post
         getFriendRequests: [User]
         getFriends: [User]
+        getFriendPosts(username: String!): [Post]
     }
     type Mutation {
         register(registerInput: RegisterInput): User!

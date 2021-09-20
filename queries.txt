@@ -1,15 +1,48 @@
-query{
-  getPosts {
+mutation{
+  createPost(body:"post3323"){
     username
+    body
+  }
+}
+mutation{
+  deletePost(postId: "6147e35f5a19347b14ab3709")
+}
+mutation{
+  removeFriend(username: "rhea_adhikari") {
+    username
+  }
+}
+mutation{
+  addFriend(username: "rhea_adhikari") {
+    username
+  }
+}
+mutation{
+  acceptFriendRequest(username: "rhea_adhikari") {
+    username
+  }
+}
+mutation{
+  rejectFriendRequest(username: "rhea_adhikari") {
+    username
+  }
+}
+mutation{
+  login(
+    username:"rhea_adhikari"
+    password:"rhea1234"
+) {
+    username
+    token
   }
 }
 
 mutation{
   register(registerInput: {
-    username:""
-    confirmPassword:""
-    password:""
-    email:""
+    username:"rhea2"
+    confirmPassword:"r"
+    password:"r"
+    email:"r@gmail.com"
   }) {
     username
     token
@@ -18,21 +51,22 @@ mutation{
   }
 }
 
-mutation{
-  login(
-    username:"rhea_adhikari"
-    password:"rhea1234"
-) {
+query{
+  getPosts {
     username
+    body
+    id
   }
 }
 
-mutation{
-  createPost(body:""){
+query{
+  getPost(postId:"6148085e823985d524889a5f" ) {
     username
+    body
   }
 }
-
-mutation{
-  deletePost(postId: "")
+query{
+  getFriendPosts(username:"rhea2" ) {
+    body
+  }
 }

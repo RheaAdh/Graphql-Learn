@@ -21,10 +21,25 @@ module.exports = {
                 throw new Error(err);
             }
         },
+        async getFriendPosts(parent, { username }, context) {
+            const user = checkAuth(context);
+            try {
+                const posts = await Post.find();
+                let friendprofile = [];
+                for (let i = 0; i < posts.length; i++) {
+                    if (posts[i].username == username) {
+                        friendprofile.push(posts[i]);
+                    }
+                }
+                return friendprofile;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
     },
     Mutation: {
         async addFriend(parent, { username }, context) {
-            const user = checkAuth(context);//jwt
+            const user = checkAuth(context); //jwt
             try {
                 const friend = await User.findOne({ username: username });
                 if (!friend) {
