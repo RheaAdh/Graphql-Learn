@@ -2,21 +2,41 @@ const Post = require("../../models/Post");
 const User = require("../../models/User");
 const checkAuth = require("../../util/check-auth");
 const { AuthenticationError } = require("apollo-server");
+
 module.exports = {
     Query: {
-        async getPosts() {
+        async getPosts(_, __, context) {
+            const user = checkAuth(context);
             try {
+                const me = await User.findOne({ username: user.username });
+                let friends = me.friends;
                 const posts = await Post.find().sort({ createdAt: -1 });
-                return posts;
+                let friendsposts = [];
+                for (let i = 0; i < friends.length; i++) {
+                    let friendname = friends[i].username;
+                    for (let j = 0; j < posts.length; j++) {
+                        if (posts[j].username == friendname) {
+                            friendsposts.push(posts[j]);
+                        }
+                    }
+                }
+                return friendsposts;
             } catch (err) {
                 throw new Error(err);
             }
         },
-        async getPost(parent, { postId }) {
+        async getPost(parent, { postId }, context) {
+            const user = checkAuth(context);
             try {
+                const me = await User.findOne({ username: user.username });
                 let post = await Post.findOne({ _id: postId });
                 if (post) {
-                    return post;
+                    let friends = me.friends;
+                    for (let i = 0; i < friends.length; i++) {
+                        if (friends[i].username == post.username) {
+                            return post;
+                        }
+                    }
                 } else {
                     throw new Error("Post not found");
                 }

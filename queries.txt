@@ -20,9 +20,19 @@ mutation{
 
 mutation{
   login(
-    username:""
-    password:""
+    username:"rhea_adhikari"
+    password:"rhea1234"
 ) {
     username
   }
+}
+
+mutation{
+  createPost(body:""){
+    username
+  }
+}
+
+mutation{
+  deletePost(postId: "")
 }

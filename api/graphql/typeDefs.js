@@ -22,11 +22,17 @@ module.exports = gql`
     type Query {
         getPosts: [Post]
         getPost(postId: ID!): Post
+        getFriendRequests: [User]
+        getFriends: [User]
     }
     type Mutation {
         register(registerInput: RegisterInput): User!
         login(username: String!, password: String!): User!
         createPost(body: String!): Post!
         deletePost(postId: ID!): String!
+        addFriend(username: String!): User!
+        removeFriend(username: String!): User!
+        acceptFriendRequest(username: String!): User!
+        rejectFriendRequest(username: String): User!
     }
 `;
